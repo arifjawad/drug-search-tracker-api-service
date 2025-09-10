@@ -25,7 +25,7 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         try {
-            $token = $this->authService->login($request->email, $request->password);
+            $token = $this->authService->login($request->validated('email'), $request->validated('password'));
             return ResponseService::apiResponse(
                 Response::HTTP_OK, 'Login successful', ['token' => $token]);
         } catch (Exception $e) {
@@ -36,7 +36,7 @@ class AuthController extends Controller
     public function register(RegistrationRequest $request)
     {
         try {
-            $token = $this->authService->register($request->name, $request->email, $request->password);
+            $token = $this->authService->register($request->validated('name'), $request->validated('email'), $request->validated('password'));
             return ResponseService::apiResponse(
                 Response::HTTP_CREATED, 'Registration successful', ['token' => $token]);
         } catch (Exception $e) {
